@@ -24,6 +24,7 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     implementation(project(":service"))
+    implementation(project(":model"))
 }
 
 tasks.getByName<Test>("test") {

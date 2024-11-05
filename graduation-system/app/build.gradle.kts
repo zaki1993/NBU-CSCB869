@@ -16,8 +16,13 @@ dependencies {
     implementation("org.springframework:spring-webmvc")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    //implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework.data:spring-data-jpa")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+
+    implementation("com.zaxxer:HikariCP:5.1.0")
+    implementation("jakarta.persistence:jakarta.persistence-api:3.1.0")
+
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
 
@@ -28,6 +33,12 @@ dependencies {
 
     implementation(project(":controller"))
     implementation(project(":model"))
+
+    /*******************************************************************************************************
+     *   Persistence
+     ******************************************************************************************************/
+    runtimeOnly("com.h2database:h2:2.2.224")
+    implementation("org.postgresql:postgresql:42.7.3")
 }
 
 tasks.getByName<Test>("test") {
