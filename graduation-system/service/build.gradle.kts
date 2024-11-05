@@ -3,6 +3,9 @@ plugins {
     id("org.springframework.boot") version "3.3.5"
     id("io.spring.dependency-management") version "1.1.6"
 }
+group = "com.nbu.CSCB869"
+version = "0.0.1-SNAPSHOT"
+
 repositories {
     mavenCentral()
 }
@@ -23,7 +26,7 @@ dependencies {
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.8.1")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
-    implementation(project(":service"))
+    implementation(project(":model"))
 }
 
 tasks.getByName<Test>("test") {

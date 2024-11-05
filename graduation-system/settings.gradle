@@ -3,4 +3,5 @@ rootProject.name = "graduation-system"
 include 'app'
 include 'controller'
 include 'model'
+include 'service'
 
