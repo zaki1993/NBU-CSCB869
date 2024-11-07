@@ -5,11 +5,13 @@ import com.nbu.CSCB869.repository.StudentRepository;
 import com.nbu.CSCB869.service.exceptions.StudentAlreadyExistsException;
 import com.nbu.CSCB869.service.exceptions.StudentNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+/*@Component
 @RequiredArgsConstructor
 public class StudentService {
     private final StudentRepository studentRepository;
@@ -39,5 +41,58 @@ public class StudentService {
 
     public Student getStudent(String fn) {
         return studentRepository.findByFn(fn).orElseThrow(() -> new StudentNotFoundException(fn));
+    }
+}*/
+
+/**
+ * Service for managing Student entities.
+ * Provides methods to retrieve and modify student data in the system.
+ */
+@Service
+public class StudentService {
+
+    private final StudentRepository studentRepository;
+
+    @Autowired
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
+
+    /**
+     * Retrieves all students in the system.
+     *
+     * @return List of all students
+     */
+    public List<Student> getAllStudents() {
+        return studentRepository.findAll();
+    }
+
+    /**
+     * Finds a student by their ID.
+     *
+     * @param id ID of the student
+     * @return The student, if found
+     */
+    public Student getStudentById(Long id) {
+        return studentRepository.findById(id).orElse(null);
+    }
+
+    /**
+     * Saves or updates a student record.
+     *
+     * @param student Student entity to save
+     * @return Saved student entity
+     */
+    public Student saveStudent(Student student) {
+        return studentRepository.save(student);
+    }
+
+    /**
+     * Deletes a student by ID.
+     *
+     * @param id ID of the student to delete
+     */
+    public void deleteStudent(Long id) {
+        studentRepository.deleteById(id);
     }
 }

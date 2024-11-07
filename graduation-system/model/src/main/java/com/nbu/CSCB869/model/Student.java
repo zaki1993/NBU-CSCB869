@@ -4,10 +4,15 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity representing a Student in the system.
+ * Holds details about the student, including their name and faculty number.
+ */
 @Entity
 @Data
 @Table(name="student")
 @NoArgsConstructor
+
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Diploma Assignments</title>
+</head>
+<body>
+<h1>Diploma Assignments</h1>
+<a href="/diploma-assignments/create">Create New Assignment</a>
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Supervisor</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="assignment : ${assignments}">
+        <td th:text="${assignment.title}"></td>
+        <td th:text="${assignment.supervisor.name}"></td>
+        <td>
+            <a th:href="@{/diploma-assignments/edit/{id}(id=${assignment.id})}">Edit</a> |
+            <a th:href="@{/diploma-assignments/delete/{id}(id=${assignment.id})}"
+               onclick="return confirm('Are you sure?');">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -4,6 +4,10 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Entity representing a Teacher in the system.
+ * Contains teacher's name and position (e.g., Assistant, Associate Professor).
+ */
 @Entity
 @Data
 @Table(name="teacher")

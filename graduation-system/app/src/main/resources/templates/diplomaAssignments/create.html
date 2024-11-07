@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create/Edit Diploma Assignment</title>
+</head>
+<body>
+<h1 th:text="${diplomaAssignment.id != null ? 'Edit Diploma Assignment' : 'Create Diploma Assignment'}"></h1>
+
+<form th:action="@{${diplomaAssignment.id != null ? '/diploma-assignments/edit/' + diplomaAssignment.id : '/diploma-assignments/create'}}"
+      th:object="${diplomaAssignment}" method="post">
+    <div>
+        <label for="title">Title:</label>
+        <input type="text" th:field="*{title}" id="title" required />
+    </div>
+    <div>
+        <label for="supervisor">Supervisor:</label>
+        <select th:field="*{supervisor.id}" id="supervisor" required>
+            <option th:each="teacher : ${teachers}" th:value="${teacher.id}"
+                    th:text="${teacher.name}"></option>
+        </select>
+    </div>
+    <div>
+        <label for="technology">Technology:</label>
+        <input type="text" th:field="*{technology}" id="technology" required />
+    </div>
+    <div>
+        <label for="goal">Goal:</label>
+        <textarea th:field="*{goal}" id="goal" required></textarea>
+    </div>
+    <div>
+        <label for="tasks">Tasks:</label>
+        <textarea th:field="*{tasks}" id="tasks" required></textarea>
+    </div>
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>

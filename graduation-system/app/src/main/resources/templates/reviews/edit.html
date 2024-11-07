@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Добавяне на рецензия</title>
+</head>
+<body>
+<h1>Добавяне на нова рецензия</h1>
+<form action="#" th:action="@{/reviews/add}" th:object="${review}" method="post">
+    <label>Дата:</label>
+    <input type="date" th:field="*{date}"/>
+    <br>
+    <label>Текст на рецензията:</label>
+    <textarea th:field="*{text}"></textarea>
+    <br>
+    <label>Заключение:</label>
+    <select th:field="*{conclusion}">
+        <option value="Положителна">Положителна</option>
+        <option value="Отрицателна">Отрицателна</option>
+    </select>
+    <br>
+    <button type="submit">Запази</button>
+</form>
+</body>
+</html>

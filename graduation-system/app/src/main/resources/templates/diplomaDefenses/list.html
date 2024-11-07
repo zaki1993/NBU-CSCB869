@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Diploma Defenses</title>
+</head>
+<body>
+<h1>Diploma Defenses</h1>
+<a href="/diploma-defenses/create">Create New Defense</a>
+<table>
+    <thead>
+    <tr>
+        <th>Student</th>
+        <th>Score</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="defense : ${defenses}">
+        <td th:text="${defense.student.name}"></td>
+        <td th:text="${defense.score}"></td>
+        <td>
+            <a th:href="@{/diploma-defenses/edit/{id}(id=${defense.id})}">Edit</a> |
+            <a th:href="@{/diploma-defenses/delete/{id}(id=${defense.id})}"
+               onclick="return confirm('Are you sure?');">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
