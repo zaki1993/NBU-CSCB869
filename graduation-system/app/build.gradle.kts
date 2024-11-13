@@ -19,6 +19,7 @@ dependencies {
     implementation("org.springframework.data:spring-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("org.springframework.boot:spring-boot-starter-security")
 
     implementation("com.zaxxer:HikariCP:5.1.0")
     implementation("jakarta.persistence:jakarta.persistence-api:3.1.0")
@@ -33,6 +34,7 @@ dependencies {
 
     implementation(project(":controller"))
     implementation(project(":model"))
+    implementation(project(":service"))
 
     /*******************************************************************************************************
      *   Persistence

@@ -2,29 +2,35 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Diploma Defenses</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
+
+<div th:replace="~{layout.html}"></div>
+
 <h1>Diploma Defenses</h1>
-<a href="/diploma-defenses/create">Create New Defense</a>
+
 <table>
     <thead>
     <tr>
         <th>Student</th>
+        <th>Defense Date</th>
         <th>Score</th>
         <th>Actions</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="defense : ${defenses}">
+    <tr th:each="defense : ${diplomaDefenses}">
         <td th:text="${defense.student.name}"></td>
+        <td th:text="${defense.date}"></td>
         <td th:text="${defense.score}"></td>
         <td>
-            <a th:href="@{/diploma-defenses/edit/{id}(id=${defense.id})}">Edit</a> |
-            <a th:href="@{/diploma-defenses/delete/{id}(id=${defense.id})}"
-               onclick="return confirm('Are you sure?');">Delete</a>
+            <a th:href="@{/diplomaDefenses/edit/{id}(id=${defense.id})}">Edit</a> |
+            <a th:href="@{/diplomaDefenses/delete/{id}(id=${defense.id})}">Delete</a>
         </td>
     </tr>
     </tbody>
 </table>
+
 </body>
 </html>

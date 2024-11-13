@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Students</title>
+    <title>Students List</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<h1>Students</h1>
-<a href="/students/create">Create New Student</a>
+
+<div th:replace="~{layout.html}"></div>
+
+<h1>Students List</h1>
+
 <table>
     <thead>
     <tr>
@@ -19,12 +23,12 @@
         <td th:text="${student.name}"></td>
         <td th:text="${student.facultyNumber}"></td>
         <td>
-            <a th:href="@{/students/edit/{id}(id=${student.id})}">Edit</a> |
-            <a th:href="@{/students/delete/{id}(id=${student.id})}"
-               onclick="return confirm('Are you sure?');">Delete</a>
+            <a th:href="@{/students/details/{id}(id=${student.id})}">Details</a> |
+            <a th:href="@{/students/edit/{id}(id=${student.id})}">Edit</a>
         </td>
     </tr>
     </tbody>
 </table>
+
 </body>
 </html>

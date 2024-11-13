@@ -6,19 +6,9 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-@Entity
-@Data
-@Table(name="teacher_type")
-@NoArgsConstructor
-public class TeacherType implements Serializable {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @Column(unique = true)
-    private String type;
-
-    public TeacherType(String type) {
-        setType(type);
-    }
+public enum TeacherType {
+    ASSISTANT,
+    SENIOR_ASSISTANT,
+    ASSOCIATE_PROFESSOR,
+    PROFESSOR
 }

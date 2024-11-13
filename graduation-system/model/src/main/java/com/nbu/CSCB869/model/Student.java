@@ -1,5 +1,6 @@
 package com.nbu.CSCB869.model;
 
+import com.nbu.CSCB869.model.auth.User;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Data
 @Table(name="student")
 @NoArgsConstructor
-
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,6 +23,13 @@ public class Student {
 
     @Column(unique = true)
     private String fn;
+
+    @Column
+    private String username;
+
+    @OneToOne
+    @JoinColumn(name = "username", referencedColumnName = "username", nullable = false, insertable = false, updatable = false)
+    private User user;
 
     public Student(String name, String fn) {
         setName(name);

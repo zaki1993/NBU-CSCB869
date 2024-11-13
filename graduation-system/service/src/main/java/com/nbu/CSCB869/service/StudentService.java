@@ -77,6 +77,10 @@ public class StudentService {
         return studentRepository.findById(id).orElse(null);
     }
 
+    public Student getStudentByFn(String fn) {
+        return studentRepository.findByFn(fn).orElseThrow(() -> new StudentNotFoundException(fn));
+    }
+
     /**
      * Saves or updates a student record.
      *

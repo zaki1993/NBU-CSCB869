@@ -30,7 +30,7 @@ public class DiplomaDefenseController {
     public String getAllDiplomaDefenses(Model model) {
         List<DiplomaDefense> defenses = diplomaDefenseService.getAllDefenses();
         model.addAttribute("defenses", defenses);
-        return "diplomaDefenses/list";
+        return "diploma-defenses/list";
     }
 
     /**
@@ -42,7 +42,7 @@ public class DiplomaDefenseController {
     @GetMapping("/create")
     public String createDiplomaDefenseForm(Model model) {
         model.addAttribute("diplomaDefense", new DiplomaDefense());
-        return "diplomaDefenses/create";
+        return "diploma-defenses/create";
     }
 
     /**
@@ -68,7 +68,7 @@ public class DiplomaDefenseController {
     public String editDiplomaDefense(@PathVariable("id") Long id, Model model) {
         DiplomaDefense diplomaDefense = diplomaDefenseService.getDefenseById(id);
         model.addAttribute("diplomaDefense", diplomaDefense);
-        return "diplomaDefenses/edit";
+        return "diploma-defenses/edit";
     }
 
     /**

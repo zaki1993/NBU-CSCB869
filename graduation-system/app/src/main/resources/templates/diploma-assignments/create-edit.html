@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${diplomaAssignment.id != null ? 'Edit Diploma Assignment' : 'Create Diploma Assignment'}"></title>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+<!-- Header -->
+<div th:replace="~{header.html}"></div>
+
+<main class="container my-5">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h1 th:text="${diplomaAssignment.id != null ? 'Edit Diploma Assignment' : 'Create Diploma Assignment'}"></h1>
+        </div>
+        <div class="card-body">
+            <form th:action="@{${diplomaAssignment.id != null ? '/diploma-assignments/edit/' + diplomaAssignment.id : '/diploma-assignments/create'}}"
+                  th:object="${diplomaAssignment}" method="post">
+
+                <!-- Title field -->
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" th:field="*{title}" required />
+                </div>
+                <!-- Purpose field -->
+                <div class="form-group">
+                    <label for="purpose">Purpose:</label>
+                    <textarea id="purpose" th:field="*{purpose}" rows="3" required></textarea>
+                </div>
+
+                <!-- Tasks field -->
+                <div class="form-group">
+                    <label for="tasks">Tasks:</label>
+                    <textarea id="tasks" th:field="*{tasks}" rows="3" required></textarea>
+                </div>
+
+                <!-- Technologies field -->
+                <div class="form-group">
+                    <label for="technologies">Technologies:</label>
+                    <textarea id="technologies" th:field="*{technologies}" rows="3" required></textarea>
+                </div>
+
+                <!-- Student dropdown -->
+                <div class="form-group">
+                    <label for="student">Student:</label>
+                    <select id="student" th:field="*{student.fn}" required>
+                        <option th:each="student : ${students}"
+                                th:text="${student.name + ' - ' + student.fn}"
+                                th:value="${student.fn}"></option>
+                    </select>
+                </div>
+
+                <!-- Save Button -->
+                <div class="text-right">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<div th:replace="~{footer.html}"></div>
+</body>
+</html>

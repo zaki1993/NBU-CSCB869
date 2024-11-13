@@ -3,6 +3,7 @@ package com.nbu.CSCB869.service;
 import com.nbu.CSCB869.model.DiplomaAssignment;
 import com.nbu.CSCB869.model.Teacher;
 import com.nbu.CSCB869.repository.DiplomaAssignmentRepository;
+import com.nbu.CSCB869.service.exceptions.DiplomaAssignmentNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,7 +61,8 @@ public class DiplomaAssignmentService {
      * @param id ID of the assignment to delete
      */
     public void deleteAssignment(Long id) {
-        diplomaAssignmentRepository.deleteById(id);
+        DiplomaAssignment toDelete = diplomaAssignmentRepository.findById(id).orElseThrow(() -> new DiplomaAssignmentNotFoundException(id));
+        diplomaAssignmentRepository.delete(toDelete);
     }
 
     /**

@@ -1,37 +1,38 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Create/Edit Review</title>
+    <title>Reviews</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<h1 th:text="${review.id != null ? 'Edit Review' : 'Create Review'}"></h1>
 
-<form th:action="@{${review.id != null ? '/reviews/edit/' + review.id : '/reviews/create'}}"
-      th:object="${review}" method="post">
-    <div>
-        <label for="student">Student:</label>
-        <select th:field="*{student.id}" id="student" required>
-            <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.name}"></option>
-        </select>
-    </div>
-    <div>
-        <label for="diplomaAssignment">Diploma Assignment:</label>
-        <select th:field="*{diplomaAssignment.id}" id="diplomaAssignment" required>
-            <option th:each="assignment : ${assignments}" th:value="${assignment.id}" th:text="${assignment.title}"></option>
-        </select>
-    </div>
-    <div>
-        <label for="reviewText">Review Text:</label>
-        <textarea th:field="*{reviewText}" id="reviewText" required></textarea>
-    </div>
-    <div>
-        <label for="conclusion">Conclusion (Positive or Negative):</label>
-        <select th:field="*{conclusion}" id="conclusion" required>
-            <option value="POSITIVE">Positive</option>
-            <option value="NEGATIVE">Negative</option>
-        </select>
-    </div>
-    <button type="submit">Save</button>
-</form>
+<div th:replace="~{layout.html}"></div>
+
+<h1>Reviews</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Student</th>
+        <th>Diploma Assignment</th>
+        <th>Review Date</th>
+        <th>Conclusion</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="review : ${reviews}">
+        <td th:text="${review.student.name}"></td>
+        <td th:text="${review.diplomaAssignment.title}"></td>
+        <td th:text="${review.date}"></td>
+        <td th:text="${review.conclusion}"></td>
+        <td>
+            <a th:href="@{/reviews/edit/{id}(id=${review.id})}">Edit</a> |
+            <a th:href="@{/reviews/delete/{id}(id=${review.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
 </body>
 </html>

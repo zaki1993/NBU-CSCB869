@@ -1,5 +1,7 @@
 package com.nbu.CSCB869.model;
 
+import com.nbu.CSCB869.model.auth.User;
+import com.nbu.CSCB869.model.auth.UserType;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,11 +19,19 @@ public class Teacher {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(unique = true)
+    @Column
     private String name;
 
-    @Column
+    @Enumerated(EnumType.STRING)
+    @Column(name = "teachertype")
     private TeacherType type;
+
+    @Column
+    private String username;
+
+    @OneToOne
+    @JoinColumn(name = "username", referencedColumnName = "username", nullable = false, insertable = false, updatable = false)
+    private User user;
 
     public Teacher(String name, TeacherType type) {
         setName(name);

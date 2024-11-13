@@ -1,24 +1,38 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Добавяне на рецензия</title>
+    <title>Create/Edit Review</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<h1>Добавяне на нова рецензия</h1>
-<form action="#" th:action="@{/reviews/add}" th:object="${review}" method="post">
-    <label>Дата:</label>
-    <input type="date" th:field="*{date}"/>
-    <br>
-    <label>Текст на рецензията:</label>
-    <textarea th:field="*{text}"></textarea>
-    <br>
-    <label>Заключение:</label>
-    <select th:field="*{conclusion}">
-        <option value="Положителна">Положителна</option>
-        <option value="Отрицателна">Отрицателна</option>
-    </select>
-    <br>
-    <button type="submit">Запази</button>
+<h1 th:text="${review.id != null ? 'Edit Review' : 'Create Review'}"></h1>
+
+<form th:action="@{${review.id != null ? '/reviews/edit/' + review.id : '/reviews/create'}}"
+      th:object="${review}" method="post">
+    <div>
+        <label for="student">Student:</label>
+        <select th:field="*{student.id}" id="student" required>
+            <option th:each="student : ${students}" th:value="${student.id}" th:text="${student.name}"></option>
+        </select>
+    </div>
+    <div>
+        <label for="diplomaAssignment">Diploma Assignment:</label>
+        <select th:field="*{diplomaAssignment.id}" id="diplomaAssignment" required>
+            <option th:each="assignment : ${assignments}" th:value="${assignment.id}" th:text="${assignment.title}"></option>
+        </select>
+    </div>
+    <div>
+        <label for="reviewText">Review Text:</label>
+        <textarea th:field="*{reviewText}" id="reviewText" required></textarea>
+    </div>
+    <div>
+        <label for="conclusion">Conclusion (Positive or Negative):</label>
+        <select th:field="*{conclusion}" id="conclusion" required>
+            <option value="POSITIVE">Positive</option>
+            <option value="NEGATIVE">Negative</option>
+        </select>
+    </div>
+    <button type="submit">Save</button>
 </form>
 </body>
 </html>
