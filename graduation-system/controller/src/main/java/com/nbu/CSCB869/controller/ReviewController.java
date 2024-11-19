@@ -1,16 +1,11 @@
 package com.nbu.CSCB869.controller;
 
-import com.nbu.CSCB869.model.Review;
+import com.nbu.CSCB869.model.diploma.thesis.ThesisReview;
 import com.nbu.CSCB869.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -35,7 +30,7 @@ public class ReviewController {
      * @return List of all reviews
      */
     @GetMapping
-    public List<Review> getAllReviews() {
+    public List<ThesisReview> getAllReviews() {
         return reviewService.getAllReviews();
     }
 
@@ -46,7 +41,7 @@ public class ReviewController {
      * @return The review, or 404 if not found
      */
     @GetMapping("/{id}")
-    public Review getReviewById(@PathVariable Long id) {
+    public ThesisReview getReviewById(@PathVariable Long id) {
         return reviewService.getReviewById(id);
     }
 
@@ -58,7 +53,7 @@ public class ReviewController {
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Review createOrUpdateReview(@RequestBody Review review) {
+    public ThesisReview createOrUpdateReview(@RequestBody ThesisReview review) {
         return reviewService.saveReview(review);
     }
 

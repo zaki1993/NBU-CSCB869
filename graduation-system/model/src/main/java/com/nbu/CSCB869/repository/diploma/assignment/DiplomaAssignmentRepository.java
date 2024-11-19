@@ -1,6 +1,6 @@
-package com.nbu.CSCB869.repository;
+package com.nbu.CSCB869.repository.diploma.assignment;
 
-import com.nbu.CSCB869.model.DiplomaAssignment;
+import com.nbu.CSCB869.model.diploma.assignment.DiplomaAssignment;
 import com.nbu.CSCB869.model.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

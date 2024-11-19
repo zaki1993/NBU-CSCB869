@@ -1,15 +1,15 @@
-package com.nbu.CSCB869.service;
+package com.nbu.CSCB869.service.diploma.assignment;
 
-import com.nbu.CSCB869.model.DiplomaAssignment;
+import com.nbu.CSCB869.model.diploma.assignment.DiplomaAssignment;
 import com.nbu.CSCB869.model.Teacher;
-import com.nbu.CSCB869.repository.DiplomaAssignmentRepository;
+import com.nbu.CSCB869.repository.diploma.assignment.DiplomaAssignmentRepository;
 import com.nbu.CSCB869.service.exceptions.DiplomaAssignmentNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Service class for managing DiplomaAssignment entities.
@@ -17,14 +17,10 @@ import java.util.Optional;
  */
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class DiplomaAssignmentService {
 
     private final DiplomaAssignmentRepository diplomaAssignmentRepository;
-
-    @Autowired
-    public DiplomaAssignmentService(DiplomaAssignmentRepository diplomaAssignmentRepository) {
-        this.diplomaAssignmentRepository = diplomaAssignmentRepository;
-    }
 
     /**
      * Retrieves all diploma assignments.
@@ -41,8 +37,8 @@ public class DiplomaAssignmentService {
      * @param id ID of the assignment
      * @return Optional containing the found assignment or empty if not found
      */
-    public Optional<DiplomaAssignment> getAssignmentById(Long id) {
-        return diplomaAssignmentRepository.findById(id);
+    public DiplomaAssignment getAssignmentById(Long id) {
+        return diplomaAssignmentRepository.findById(id).orElseThrow(() -> new DiplomaAssignmentNotFoundException(id));
     }
 
     /**
@@ -92,5 +88,16 @@ public class DiplomaAssignmentService {
      */
     public List<DiplomaAssignment> getAssignmentsByTeacher(Teacher supervisor) {
         return diplomaAssignmentRepository.findByTeacher(supervisor);
+    }
+
+    public void approveDiplomaAssignment(Long id) {
+        // Find the diploma assignment
+        DiplomaAssignment assignment = getAssignmentById(id);
+
+        // approve the diploma assignment
+        assignment.setApproved(true);
+
+        // save changes
+        diplomaAssignmentRepository.save(assignment);
     }
 }

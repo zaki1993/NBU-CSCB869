@@ -1,21 +1,21 @@
-package com.nbu.CSCB869.controller;
+package com.nbu.CSCB869.controller.diploma.assignment;
 
 import com.nbu.CSCB869.global.AccessControlConfig;
-import com.nbu.CSCB869.model.DiplomaAssignment;
+import com.nbu.CSCB869.model.diploma.assignment.DiplomaAssignment;
 import com.nbu.CSCB869.model.Student;
 import com.nbu.CSCB869.model.Teacher;
-import com.nbu.CSCB869.service.DiplomaAssignmentService;
+import com.nbu.CSCB869.service.diploma.assignment.DiplomaAssignmentService;
 import com.nbu.CSCB869.service.StudentService;
 import com.nbu.CSCB869.service.TeacherService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/diploma-assignments")
@@ -36,8 +36,45 @@ public class DiplomaAssignmentController {
     @GetMapping
     public String getAllDiplomaAssignments(Model model) {
         List<DiplomaAssignment> assignments = diplomaAssignmentService.getAllAssignments();
+        // The student can view only approved diploma assignments
+        // The teacher can view all diploma assignments
+        if (AccessControlConfig.isStudent()) {
+            assignments = assignments.stream()
+                    .filter(DiplomaAssignment::isApproved)
+                    .collect(Collectors.toList());
+        }
         model.addAttribute("assignments", assignments);
         return "diploma-assignments/list";
+    }
+
+    /**
+     * Displays all diploma assignments for specific username.
+     *
+     * @param model The model object to which the data will be added.
+     * @return The name of the Thymeleaf template to render.
+     */
+    @GetMapping("/user")
+    public String getDiplomaAssignmentsForUser(Model model) {
+        List<DiplomaAssignment> assignments = diplomaAssignmentService.getAllAssignments();
+        assignments = assignments.stream()
+                .filter(a -> getAssignmentUsername(a).equals(AccessControlConfig.getUsername()))
+                .collect(Collectors.toList());
+        model.addAttribute("assignments", assignments);
+        model.addAttribute("userOnly", true);
+        return "diploma-assignments/list";
+    }
+
+    /**
+     * Get assignment username depending if we are teacher or student.
+     *
+     * @param a
+     * @return
+     */
+    private String getAssignmentUsername(DiplomaAssignment a) {
+        if (AccessControlConfig.isStudent()) {
+            return a.getStudent().getUsername();
+        }
+        return a.getTeacher().getUsername();
     }
 
     /**
@@ -73,6 +110,22 @@ public class DiplomaAssignmentController {
         diplomaAssignment.setTeacher(t);
 
         diplomaAssignmentService.saveAssignment(diplomaAssignment);
+
+        // redirect to edit page
+        return "redirect:/diploma-assignments";
+    }
+
+    /**
+     * Approves the diploma assignment.
+     *
+     * @param id The diploma assignment id.
+     * @return Redirects to the list of all assignments after saving.
+     */
+    @PreAuthorize("hasAuthority('TEACHER')")
+    @PostMapping("/approve/{id}")
+    public String approveDiplomaAssignment(@PathVariable("id") Long id, Model model) {
+        diplomaAssignmentService.approveDiplomaAssignment(id);
+
         return "redirect:/diploma-assignments";
     }
 
@@ -85,8 +138,8 @@ public class DiplomaAssignmentController {
      */
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasAuthority('TEACHER')")
-    public String editDiplomaAssignment(@PathVariable("id") Long id, Model model) {
-        DiplomaAssignment diplomaAssignment = diplomaAssignmentService.getAssignmentById(id).get();
+    public String getEditDiplomaAssignment(@PathVariable("id") Long id, Model model) {
+        DiplomaAssignment diplomaAssignment = diplomaAssignmentService.getAssignmentById(id);
         model.addAttribute("diplomaAssignment", diplomaAssignment);
         model.addAttribute("students", studentService.getAllStudents());
         return "diploma-assignments/create-edit";
@@ -101,11 +154,10 @@ public class DiplomaAssignmentController {
      */
     @PostMapping("/edit/{id}")
     @PreAuthorize("hasAuthority('TEACHER')")
-    public String updateDiplomaAssignment(@PathVariable("id") Long id,
+    public String editDiplomaAssignment(@PathVariable("id") Long id,
                                           @ModelAttribute("diplomaAssignment") DiplomaAssignment diplomaAssignment,
                                           @RequestParam("student.fn") String studentFn) {
-        DiplomaAssignment toModify = diplomaAssignmentService.getAssignmentById(diplomaAssignment.getId()).get();
-        toModify.setId(id);
+        DiplomaAssignment toModify = diplomaAssignmentService.getAssignmentById(id);
 
         Student s = studentService.getStudentByFn(studentFn);
         toModify.setStudent(s);
@@ -124,11 +176,11 @@ public class DiplomaAssignmentController {
      * @param id The ID of the diploma assignment to delete.
      * @return Redirects to the list of all assignments after deletion.
      */
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     @PreAuthorize("hasAuthority('TEACHER')")
-    public String deleteDiplomaAssignment(@PathVariable("id") Long id) {
+    public ResponseEntity deleteDiplomaAssignment(@PathVariable("id") Long id) {
         diplomaAssignmentService.deleteAssignment(id);
-        return "redirect:/diploma-assignments";
+        return ResponseEntity.ok().build();
     }
 
     private Teacher getTeacherFromContext() {

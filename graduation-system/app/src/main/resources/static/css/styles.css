@@ -172,3 +172,9 @@ h2 {
 .btn-submit:hover {
     background-color: #357ABD;
 }
+
+.create-button.disabled .btn-primary.disabled .delete-btn.disabled {
+    background-color: #cccccc; /* Light gray color */
+    color: #666666;            /* Darker gray text */
+    cursor: not-allowed;       /* Not-allowed cursor */
+}

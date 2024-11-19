@@ -1,7 +1,6 @@
-package com.nbu.CSCB869.repository;
+package com.nbu.CSCB869.repository.diploma.defense;
 
-import com.nbu.CSCB869.model.DiplomaDefense;
-import com.nbu.CSCB869.model.Teacher;
+import com.nbu.CSCB869.model.diploma.defense.DiplomaDefense;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

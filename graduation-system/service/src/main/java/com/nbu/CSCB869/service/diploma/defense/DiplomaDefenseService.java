@@ -1,7 +1,8 @@
-package com.nbu.CSCB869.service;
+package com.nbu.CSCB869.service.diploma.defense;
 
-import com.nbu.CSCB869.model.DiplomaDefense;
-import com.nbu.CSCB869.repository.DiplomaDefenseRepository;
+import com.nbu.CSCB869.model.diploma.defense.DiplomaDefense;
+import com.nbu.CSCB869.repository.diploma.defense.DiplomaDefenseRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +13,10 @@ import java.util.List;
  * Provides methods to retrieve and manipulate diploma defense data.
  */
 @Service
+@RequiredArgsConstructor
 public class DiplomaDefenseService {
 
     private final DiplomaDefenseRepository diplomaDefenseRepository;
-
-    @Autowired
-    public DiplomaDefenseService(DiplomaDefenseRepository diplomaDefenseRepository) {
-        this.diplomaDefenseRepository = diplomaDefenseRepository;
-    }
 
     /**
      * Retrieves all diploma defenses.

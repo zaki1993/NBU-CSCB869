@@ -1,5 +1,7 @@
-package com.nbu.CSCB869.model;
+package com.nbu.CSCB869.model.diploma.defense;
 
+import com.nbu.CSCB869.model.Student;
+import com.nbu.CSCB869.model.Teacher;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

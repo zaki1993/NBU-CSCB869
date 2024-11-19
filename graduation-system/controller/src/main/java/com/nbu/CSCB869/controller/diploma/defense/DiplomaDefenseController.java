@@ -1,7 +1,7 @@
-package com.nbu.CSCB869.controller;
+package com.nbu.CSCB869.controller.diploma.defense;
 
-import com.nbu.CSCB869.model.DiplomaDefense;
-import com.nbu.CSCB869.service.DiplomaDefenseService;
+import com.nbu.CSCB869.model.diploma.defense.DiplomaDefense;
+import com.nbu.CSCB869.service.diploma.defense.DiplomaDefenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

@@ -4,8 +4,6 @@ plugins {
     id("io.spring.dependency-management") version "1.1.6"
 }
 
-group = "org.example"
-
 repositories {
     mavenCentral()
 }
@@ -45,4 +43,40 @@ dependencies {
 
 tasks.getByName<Test>("test") {
     useJUnitPlatform()
+}
+
+var graduationSystemImageName = findProperty("container_registry")
+    .toString()
+    .plus("${rootProject.name}.${project.name}:")
+    .toLowerCase()
+    .plus("${project.findProperty("version").toString()}")
+
+var containerName = "${rootProject.name}.${project.name}-${project.findProperty("version").toString()}".replace(".", "-").replace("_", "-")
+
+tasks.getByName<org.springframework.boot.gradle.tasks.bundling.BootBuildImage>("bootBuildImage") {
+    imageName = graduationSystemImageName
+}
+
+tasks {
+    task<Exec>("dockerRun") {
+        group = "grad-system"
+        val args = mutableListOf<String>()
+
+        args.add("docker")
+        args.add("run")
+        args.add("-d")
+        args.add("--name")
+        args.add(containerName)
+        args.add("--memory=4g")
+        args.add("--restart")
+        args.add("on-failure:3")
+        args.add("-e")
+        // Allow docker to access the local database on the same machine
+        args.add("GRAD_SYSTEM_URL=jdbc:postgresql://host.docker.internal:5432/graduation-system-db")
+        args.add("-p")
+        args.add("8080:8080")
+        args.add(graduationSystemImageName)
+        commandLine = args
+        println("Running container: $args")
+    }
 }

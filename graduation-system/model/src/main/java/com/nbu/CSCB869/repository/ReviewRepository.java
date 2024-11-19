@@ -1,6 +1,6 @@
 package com.nbu.CSCB869.repository;
 
-import com.nbu.CSCB869.model.Review;
+import com.nbu.CSCB869.model.diploma.thesis.ThesisReview;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
  * Provides CRUD operations and allows custom queries based on review conclusions.
  */
 @Repository
-public interface ReviewRepository extends JpaRepository<Review, Long> {
+public interface ReviewRepository extends JpaRepository<ThesisReview, Long> {
 
     /**
      * Counts the number of reviews with a specified conclusion.

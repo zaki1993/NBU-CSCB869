@@ -1,5 +1,6 @@
-package com.nbu.CSCB869.model;
+package com.nbu.CSCB869.model.diploma.thesis;
 
+import com.nbu.CSCB869.model.diploma.assignment.DiplomaAssignment;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import java.time.LocalDate;
 @Entity
 @Data
 @NoArgsConstructor
-public class Review {
+public class ThesisReview {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,10 +27,9 @@ public class Review {
     private String text;
 
     @Column(nullable = false)
-    private String conclusion; // Положителна или Отрицателна
+    private String conclusion;
 
-    // Свързване към дипломната работа, която се рецензира
-    @ManyToOne
-    @JoinColumn(name = "diploma_assignment_id", nullable = false)
-    private DiplomaAssignment diplomaAssignment;
+    @OneToOne
+    @JoinColumn(name = "thesis_id", nullable = false)
+    private DiplomaThesis thesis;
 }

@@ -1,12 +1,7 @@
 package com.nbu.CSCB869.service;
 
-import com.nbu.CSCB869.model.Review;
+import com.nbu.CSCB869.model.diploma.thesis.ThesisReview;
 import com.nbu.CSCB869.repository.ReviewRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +26,7 @@ public class ReviewService {
      *
      * @return List of all reviews
      */
-    public List<Review> getAllReviews() {
+    public List<ThesisReview> getAllReviews() {
         return reviewRepository.findAll();
     }
 
@@ -41,7 +36,7 @@ public class ReviewService {
      * @param id ID of the review
      * @return The review if found, or null if not found
      */
-    public Review getReviewById(Long id) {
+    public ThesisReview getReviewById(Long id) {
         return reviewRepository.findById(id).orElse(null);
     }
 
@@ -51,7 +46,7 @@ public class ReviewService {
      * @param review Review entity to save
      * @return The saved review entity
      */
-    public Review saveReview(Review review) {
+    public ThesisReview saveReview(ThesisReview review) {
         return reviewRepository.save(review);
     }
 

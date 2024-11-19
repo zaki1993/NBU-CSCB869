@@ -16,11 +16,19 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
-
+/*
     @ExceptionHandler(BaseValidationException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public ResponseEntity<ErrorDto> handleBaseValidationException(BaseValidationException ex) {
         return ResponseEntity.unprocessableEntity().body(createHttpErrorInfo(HttpStatus.UNPROCESSABLE_ENTITY, ex.getMessage()));
+    }*/
+
+    @ExceptionHandler(BaseValidationException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public String handleBaseValidationException(BaseValidationException ex) {
+        log.trace("Validation exception ", ex);
+        return "404";
+        //return ResponseEntity.unprocessableEntity().body(createHttpErrorInfo(HttpStatus.UNPROCESSABLE_ENTITY, ex.getMessage()));
     }
 
     private ErrorDto createHttpErrorInfo(HttpStatus httpStatus, String message) {
@@ -43,7 +51,8 @@ public class GlobalExceptionHandler {
         // Add a user-friendly error message to the model
         model.addAttribute("errorMessage", "An unexpected error occurred. Please try again later.");
 
-        return "error";
+        return "404";
+        //return "error";
     }
 
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
