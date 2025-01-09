@@ -1,17 +1,22 @@
 package com.nbu.CSCB869.model.diploma.defense;
 
-import com.nbu.CSCB869.model.Student;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.nbu.CSCB869.model.Teacher;
+import com.nbu.CSCB869.model.diploma.thesis.DiplomaThesis;
+import com.nbu.CSCB869.model.diploma.thesis.review.ThesisReview;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Entity representing a Diploma Defense procedure.
- * Contains details such as defense date, student, supervising teacher, and defense score.
+ * Contains details such as defense date, associated students and teachers, and scores.
  */
 @Entity
 @Data
@@ -21,13 +26,45 @@ public class DiplomaDefense {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDate defenseDate;
+    @Column(nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime defenseDate;
 
-    private Double score;
+    @Column(nullable = false)
+    private String location;
 
-    @ManyToMany
-    private List<Student> students;
+    @ElementCollection
+    @CollectionTable(name = "defense_thesis", joinColumns = @JoinColumn(name = "defense_id"))
+    @Column(name = "thesis_id")
+    private List<Long> theses; // Stores only the IDs of the theses
 
-    @ManyToMany
-    private List<Teacher> teachers;
+    // List of Teacher IDs
+    @ElementCollection
+    @CollectionTable(name = "defense_teacher", joinColumns = @JoinColumn(name = "defense_id"))
+    @Column(name = "teacher_id")
+    private List<Long> teachers;
+
+    // List of Student IDs
+    @ElementCollection
+    @CollectionTable(name = "defense_student", joinColumns = @JoinColumn(name = "defense_id"))
+    @Column(name = "student_id")
+    private List<Long> students;
+
+    // Map to store grades for each thesis
+    @ElementCollection
+    @CollectionTable(name = "defense_grades", joinColumns = @JoinColumn(name = "defense_id"))
+    @MapKeyColumn(name = "thesis_id")
+    @Column(name = "grade")
+    private Map<Long, Double> gradles = new HashMap<>(); // Thesis ID -> Grade
+
+    /**
+     * Checks if the defense is read-only.
+     * A defense is read-only if it has any associated grades.
+     *
+     * @return true if the defense has grades, false otherwise.
+     */
+    public boolean isReadOnly() {
+        return gradles != null && !gradles.isEmpty();
+    }
+
 }

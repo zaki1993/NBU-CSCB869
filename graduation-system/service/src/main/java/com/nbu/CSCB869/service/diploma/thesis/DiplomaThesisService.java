@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +29,18 @@ public class DiplomaThesisService {
 
     public void saveThesis(DiplomaThesis toUpdate) {
         diplomaThesisRepository.save(toUpdate);
+    }
+
+    public List<DiplomaThesis> getAllTheses() {
+        return diplomaThesisRepository.findAll();
+    }
+
+    public List<DiplomaThesis> getThesesByIds(List<Long> thesisIds) {
+        return diplomaThesisRepository.findAllById(thesisIds);
+    }
+
+    public List<DiplomaThesis> getThesesWithGradesInRange(double minGrade, double maxGrade) {
+        return diplomaThesisRepository.findThesesWithGradesInRange(minGrade, maxGrade);
     }
 }
 

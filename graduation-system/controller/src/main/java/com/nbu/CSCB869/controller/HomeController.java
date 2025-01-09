@@ -3,10 +3,12 @@ package com.nbu.CSCB869.controller;
 import com.nbu.CSCB869.service.*;
 import com.nbu.CSCB869.service.diploma.assignment.DiplomaAssignmentService;
 import com.nbu.CSCB869.service.diploma.defense.DiplomaDefenseService;
+import com.nbu.CSCB869.service.diploma.thesis.review.ThesisReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * HomeController handles the requests related to the home page and provides
@@ -15,13 +17,13 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/")
 public class HomeController {
 
     private final StudentService studentService;
-
     private final TeacherService teacherService;
     private final DiplomaAssignmentService diplomaAssignmentService;
-    private final ReviewService reviewService;
+    private final ThesisReviewService reviewService;
     private final DiplomaDefenseService diplomaDefenseService;
 
     /**

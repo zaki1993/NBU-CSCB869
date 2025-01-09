@@ -2,13 +2,7 @@ package com.nbu.CSCB869.service;
 
 import com.nbu.CSCB869.model.Teacher;
 import com.nbu.CSCB869.repository.TeacherRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-
+import com.nbu.CSCB869.repository.diploma.defense.DiplomaDefenseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,10 +16,12 @@ import java.util.List;
 public class TeacherService {
 
     private final TeacherRepository teacherRepository;
+    private final DiplomaDefenseRepository diplomaDefenseRepository;
 
     @Autowired
-    public TeacherService(TeacherRepository teacherRepository) {
+    public TeacherService(TeacherRepository teacherRepository, DiplomaDefenseRepository diplomaDefenseRepository) {
         this.teacherRepository = teacherRepository;
+        this.diplomaDefenseRepository = diplomaDefenseRepository;
     }
 
     /**
@@ -68,5 +64,9 @@ public class TeacherService {
 
     public Teacher getTeacherByUsername(String username) {
         return teacherRepository.findByUsername(username);
+    }
+
+    public long getSuccessfulDefensesByTeacher(Long teacherId) {
+        return diplomaDefenseRepository.countSuccessfulDefensesByTeacher(teacherId);
     }
 }

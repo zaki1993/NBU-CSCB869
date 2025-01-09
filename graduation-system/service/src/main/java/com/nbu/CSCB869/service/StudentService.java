@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /*@Component
@@ -81,22 +82,7 @@ public class StudentService {
         return studentRepository.findByFn(fn).orElseThrow(() -> new StudentNotFoundException(fn));
     }
 
-    /**
-     * Saves or updates a student record.
-     *
-     * @param student Student entity to save
-     * @return Saved student entity
-     */
-    public Student saveStudent(Student student) {
-        return studentRepository.save(student);
-    }
-
-    /**
-     * Deletes a student by ID.
-     *
-     * @param id ID of the student to delete
-     */
-    public void deleteStudent(Long id) {
-        studentRepository.deleteById(id);
+    public List<Student> getGraduatedStudentsInPeriod(LocalDateTime startDate, LocalDateTime endDate) {
+        return studentRepository.findGraduatedStudentsInPeriod(startDate, endDate);
     }
 }

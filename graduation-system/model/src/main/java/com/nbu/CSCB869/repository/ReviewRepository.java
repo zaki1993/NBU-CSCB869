@@ -1,6 +1,6 @@
 package com.nbu.CSCB869.repository;
 
-import com.nbu.CSCB869.model.diploma.thesis.ThesisReview;
+import com.nbu.CSCB869.model.diploma.thesis.review.ThesisReview;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

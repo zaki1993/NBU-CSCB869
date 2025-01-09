@@ -44,6 +44,8 @@ public class DiplomaAssignmentController {
                     .collect(Collectors.toList());
         }
         model.addAttribute("assignments", assignments);
+        model.addAttribute("students", studentService.getAllStudents());
+        model.addAttribute("teachers", teacherService.getAllTeachers());
         return "diploma-assignments/list";
     }
 

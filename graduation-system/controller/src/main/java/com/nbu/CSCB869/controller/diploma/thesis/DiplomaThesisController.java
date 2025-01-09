@@ -109,7 +109,7 @@ public class DiplomaThesisController {
             diplomaThesisService.saveThesis(toUpdate);
             model.addAttribute("diplomaThesis", thesis);
             model.addAttribute("diplomaAssignment", thesis.getAssignment());
-            return "diploma-thesis/create-edit";
+            return "redirect:/diploma-thesis/edit/" + id;
         }
         return "redirect:/diploma-assignments/user";
     }
