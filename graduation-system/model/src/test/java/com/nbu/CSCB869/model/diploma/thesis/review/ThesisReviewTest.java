@@ -4,11 +4,14 @@ import com.nbu.CSCB869.model.diploma.defense.DiplomaDefense;
 import com.nbu.CSCB869.model.diploma.thesis.DiplomaThesis;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@ExtendWith(MockitoExtension.class)
 class ThesisReviewTest {
 
     private ThesisReview review;
